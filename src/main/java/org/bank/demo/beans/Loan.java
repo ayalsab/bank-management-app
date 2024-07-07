@@ -2,6 +2,7 @@ package org.bank.demo.beans;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -26,10 +27,10 @@ public class Loan {
     private float amount;
 
     @Column(name = "startDate")
-    private Date startDate;
+    private LocalDateTime startDate;
 
     @Column(name = "endDate")
-    private Date endDate;
+    private LocalDateTime endDate;
 
     @Column(name = "monthly_pmt")
     private float monthly_pmt;
@@ -42,6 +43,19 @@ public class Loan {
 
     @OneToMany(mappedBy = "loan")
     private List<Transaction> transactions;
+
+    public Loan(Integer loanId, Account account, Currency currency, float amount, LocalDateTime startDate, LocalDateTime endDate, float monthly_pmt, float interestRate, String status, List<Transaction> transactions) {
+        this.loanId = loanId;
+        this.account = account;
+        this.currency = currency;
+        this.amount = amount;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.monthly_pmt = monthly_pmt;
+        this.interestRate = interestRate;
+        this.status = status;
+        this.transactions = transactions;
+    }
 
     public void setLoanId(Integer loanId) {
         this.loanId = loanId;
@@ -59,11 +73,11 @@ public class Loan {
         this.amount = amount;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 
@@ -99,11 +113,11 @@ public class Loan {
         return amount;
     }
 
-    public Date getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 

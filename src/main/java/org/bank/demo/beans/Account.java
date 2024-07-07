@@ -33,6 +33,16 @@ public class Account {
     @OneToMany(mappedBy = "account")
     private List<Loan> loans;
 
+    public Account(Integer accountId, Customer customer, Double balance, Currency currency, String status, List<Transaction> transactions, List<Loan> loans) {
+        this.accountId = accountId;
+        this.customer = customer;
+        this.balance = balance;
+        this.currency = currency;
+        this.status = status;
+        this.transactions = transactions;
+        this.loans = loans;
+    }
+
     public void setLoans(List<Loan> loans) {
         this.loans = loans;
     }

@@ -29,6 +29,15 @@ public class Currency {
     @OneToMany(mappedBy = "currency")
     private List<Loan> loans;
 
+    public Currency(Integer currencyId, String code, Double exchangeRate, List<Account> accounts, List<Transaction> transactions, List<Loan> loans) {
+        this.currencyId = currencyId;
+        this.code = code;
+        this.exchangeRate = exchangeRate;
+        this.accounts = accounts;
+        this.transactions = transactions;
+        this.loans = loans;
+    }
+
     public void setCurrencyId(Integer currencyId) {
         this.currencyId = currencyId;
     }

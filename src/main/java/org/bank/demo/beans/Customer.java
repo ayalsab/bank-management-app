@@ -34,6 +34,16 @@ public class Customer {
     @OneToMany(mappedBy = "customer")
     private List<Account> accounts;
 
+    public Customer(Integer customerId, String name, String email, int phone, String address, String username, String password, List<Account> accounts) {
+        this.customerId = customerId;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.username = username;
+        this.password = password;
+        this.accounts = accounts;
+    }
 
     public List<Account> getAccounts() {
         return accounts;

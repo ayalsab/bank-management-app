@@ -2,6 +2,7 @@ package org.bank.demo.beans;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -34,7 +35,18 @@ public class Transaction {
     private Double amount;
 
     @Column(name = "date")
-    private Date date;
+    private LocalDateTime date;
+
+    public Transaction(Integer transactionId, Account account, Integer secondAccountId, Loan loan, Currency currency, String type, Double amount, LocalDateTime date) {
+        this.transactionId = transactionId;
+        this.account = account;
+        this.secondAccountId = secondAccountId;
+        this.loan = loan;
+        this.currency = currency;
+        this.type = type;
+        this.amount = amount;
+        this.date = date;
+    }
 
     public void setTransactionId(Integer transactionId) {
         this.transactionId = transactionId;
@@ -64,7 +76,7 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
@@ -96,7 +108,7 @@ public class Transaction {
         return amount;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 }
