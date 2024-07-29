@@ -1,5 +1,7 @@
 package org.bank.demo.beans;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -13,6 +15,9 @@ public class Customer {
     @Column(name = "customer_id")
     private Integer customerId;
 
+    @Column(name = "IDNumber")
+    private Integer IDNumber;
+
     @Column(name = "name")
     private String name;
 
@@ -20,7 +25,7 @@ public class Customer {
     private String email;
 
     @Column(name = "phone")
-    private int phone;
+    private String phone;
 
     @Column(name = "address")
     private String address;
@@ -32,10 +37,21 @@ public class Customer {
     private String password;
 
     @OneToMany(mappedBy = "customer")
+    @JsonBackReference
+    @JsonIgnore
     private List<Account> accounts;
 
-    public Customer(Integer customerId, String name, String email, int phone, String address, String username, String password, List<Account> accounts) {
-        this.customerId = customerId;
+    public void addAccount(Account account)
+    {
+        this.accounts.add(account);
+    }
+
+    public Customer() {
+        System.out.println("Customer default CTOR");
+    }
+
+    public Customer(Integer id,String name, String email, String phone, String address, String username, String password, List<Account> accounts) {
+        this.IDNumber = id;
         this.name = name;
         this.email = email;
         this.phone = phone;
@@ -49,6 +65,10 @@ public class Customer {
         return accounts;
     }
 
+    public Integer getIDNumber() {
+        return IDNumber;
+    }
+
     public String getName() {
         return name;
     }
@@ -57,7 +77,7 @@ public class Customer {
         return email;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
@@ -77,6 +97,10 @@ public class Customer {
         this.accounts = accounts;
     }
 
+    public void setIDNumber(Integer id) {
+        this.IDNumber = id;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -89,7 +113,7 @@ public class Customer {
         this.address = address;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

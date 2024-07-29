@@ -1,5 +1,7 @@
 package org.bank.demo.beans;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -13,18 +15,24 @@ public class Loan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "loan_id")
+    @JsonBackReference
+    @JsonIgnore
     private Integer loanId;
 
     @ManyToOne
     @JoinColumn(name = "account_id")
+    @JsonBackReference
+    @JsonIgnore
     private Account account;
 
     @ManyToOne
     @JoinColumn(name = "currency_id")
+    @JsonBackReference
+    @JsonIgnore
     private Currency currency;
 
     @Column(name = "amount")
-    private float amount;
+    private Double amount;
 
     @Column(name = "startDate")
     private LocalDateTime startDate;
@@ -41,11 +49,21 @@ public class Loan {
     @Column(name = "status")
     private String status;
 
-    @OneToMany(mappedBy = "loan")
+    @OneToMany(mappedBy = "loan",fetch = FetchType.EAGER)
+    @JsonBackReference
+    @JsonIgnore
     private List<Transaction> transactions;
 
-    public Loan(Integer loanId, Account account, Currency currency, float amount, LocalDateTime startDate, LocalDateTime endDate, float monthly_pmt, float interestRate, String status, List<Transaction> transactions) {
-        this.loanId = loanId;
+    public void addTransaction(Transaction transaction)
+    {
+        this.transactions.add(transaction);
+    }
+
+    public Loan() {
+        System.out.println("Loan default CTOR");
+    }
+
+    public Loan( Account account, Currency currency, Double amount, LocalDateTime startDate, LocalDateTime endDate, float monthly_pmt, float interestRate, String status, List<Transaction> transactions) {
         this.account = account;
         this.currency = currency;
         this.amount = amount;
@@ -69,7 +87,7 @@ public class Loan {
         this.currency = currency;
     }
 
-    public void setAmount(float amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
@@ -109,7 +127,7 @@ public class Loan {
         return currency;
     }
 
-    public float getAmount() {
+    public Double getAmount() {
         return amount;
     }
 

@@ -1,0 +1,84 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+
+
+Table Customer {
+  customer_id  integer [primary key]
+  name  varchar
+  email varchar
+  phone varchar
+  address varchar
+  username varchar
+  password VARCHAR
+}
+
+Table Account     {
+  account_id   integer [primary key]
+  customer_id INT
+  balance DECIMAL(15, 2)
+  currency_id INT
+  status VARCHAR(50)
+}
+Table Transaction  {
+  transaction_id integer [primary key]
+  account_id INT
+  second_account_id INT
+  loan_id INT
+  currency_id INT
+  type VARCHAR(50)
+  amount DECIMAL(15, 2)
+  date TIMESTAMP
+}
+
+Table loan   {
+  loan_id    integer [primary key]
+  account_id INT
+  currency_id INT
+  amount DECIMAL(15, 2)
+  start_date DATE
+  end_date DATE
+  monthly_pmt DECIMAL(15, 2)
+  interest_rate DECIMAL(5, 2)
+  status VARCHAR(50)
+}
+Table currency {
+  currency_id integer [primary key]
+  code VARCHAR(10)
+  exchange_rate DECIMAL(15, 2)
+}
+
+
+Ref: Customer.customer_id < Account.customer_id // one-to-many
+Ref: Account.currency_id > currency.currency_id // many-to-one
+Ref: Transaction.currency_id > currency.currency_id // many-to-one
+Ref: loan.currency_id > currency.currency_id // many-to-one
+Ref: loan.loan_id < Transaction.loan_id // many-to-one
+
+Ref: Account.account_id < Transaction.account_id // one-to-many
+
+Ref: Account.account_id < loan.account_id // one-to-many
+
+
+https://dbdiagram.io/d/6679a2bb9939893dae2008b5
+
+
+bankspring05@gmail.com
+bankSpring123!
+
+lmqq says tsbx bkjk
+
+
+5040 6298
+2694 6141
+6108 4694
+1590 7198
+6100 5018
+2401 9703
+1874 2689
+0375 3201
+8458 4893
+4473 5063
+
+
+

@@ -1,4 +1,4 @@
 package org.bank.demo.exceptions;
 
-public class AccountNotFoundException extends Exception {
+public class AccountNotActiveException extends Exception {
 }

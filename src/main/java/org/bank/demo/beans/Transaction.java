@@ -1,6 +1,9 @@
 package org.bank.demo.beans;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.bank.demo.shared.TransactionType;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -11,10 +14,14 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "transaction_id")
+    @JsonBackReference
+    @JsonIgnore
     private Integer transactionId;
 
     @ManyToOne
     @JoinColumn(name = "account_id")
+    @JsonBackReference
+    @JsonIgnore
     private Account account;
 
     @Column(name = "second_account_id")
@@ -22,14 +29,18 @@ public class Transaction {
 
     @ManyToOne
     @JoinColumn(name = "loan_id")
+    @JsonBackReference
+    @JsonIgnore
     private Loan loan;
 
     @ManyToOne
     @JoinColumn(name = "currency_id")
+    @JsonBackReference
+    @JsonIgnore
     private Currency currency;
 
     @Column(name = "type")
-    private String type;
+    private TransactionType type;
 
     @Column(name = "amount")
     private Double amount;
@@ -37,8 +48,11 @@ public class Transaction {
     @Column(name = "date")
     private LocalDateTime date;
 
-    public Transaction(Integer transactionId, Account account, Integer secondAccountId, Loan loan, Currency currency, String type, Double amount, LocalDateTime date) {
-        this.transactionId = transactionId;
+    public Transaction() {
+        System.out.println("Transaction default CTOR");
+    }
+
+    public Transaction(Account account, Integer secondAccountId, Loan loan, Currency currency, TransactionType type, Double amount, LocalDateTime date) {
         this.account = account;
         this.secondAccountId = secondAccountId;
         this.loan = loan;
@@ -68,7 +82,7 @@ public class Transaction {
         this.currency = currency;
     }
 
-    public void setType(String type) {
+    public void setType(TransactionType type) {
         this.type = type;
     }
 
@@ -100,7 +114,7 @@ public class Transaction {
         return currency;
     }
 
-    public String getType() {
+    public TransactionType getType() {
         return type;
     }
 

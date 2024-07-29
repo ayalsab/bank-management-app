@@ -1,8 +1,11 @@
 package org.bank.demo.controllers;
 
 import org.bank.demo.BL.CurrencyBL;
+import org.bank.demo.BL.CustomerBL;
 import org.bank.demo.beans.Currency;
+import org.bank.demo.beans.Customer;
 import org.bank.demo.exceptions.CurrencyAlreadyExistException;
+import org.bank.demo.exceptions.CustomerAlreadyExistException;
 import org.bank.demo.exceptions.IdNumberNotValidException;
 import org.bank.demo.exceptions.InvalidCurrencyDataException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +16,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/currency")
-public class CurrencyController {
+@RequestMapping("/Customer")
+public class CustomerController {
     @Autowired
-    private CurrencyBL currencyBL;
+    private CustomerBL customerBL;
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Currency> getCurrency(@PathVariable Integer id){
+    public ResponseEntity<Customer> getCustomer(@PathVariable Integer id){
         try {
-            return ResponseEntity.ok(this.currencyBL.getCurrency(id));
+            return ResponseEntity.ok(this.customerBL.getCustomer(id));
         }
         catch(Exception e)
         {
@@ -30,17 +33,17 @@ public class CurrencyController {
     }
 
     @GetMapping("/get/all")
-    public List<Currency> getAllCurrencies()
+    public List<Customer> getAllCustomers()
     {
-        return this.currencyBL.getAllCurrencies();
+        return this.customerBL.getAllCustomers();
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Currency> addCurrency(@RequestBody Currency currency) throws CurrencyAlreadyExistException, IdNumberNotValidException, InvalidCurrencyDataException{
+    public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer) throws CurrencyAlreadyExistException, IdNumberNotValidException, InvalidCurrencyDataException{
         try {
-            Currency createdCurrency = this.currencyBL.addCurrency(currency);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdCurrency);
-        } catch (Exception e) {
+            Customer createdCustomer = this.customerBL.addCustomer(customer);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomer);
+        } catch (Exception | CustomerAlreadyExistException e) {
             throw new RuntimeException(e);
         }
     }

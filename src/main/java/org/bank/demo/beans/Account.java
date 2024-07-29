@@ -1,8 +1,12 @@
 package org.bank.demo.beans;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
 import java.util.List;
+import org.bank.demo.shared.AccountStatus;
+
+
 
 @Entity
 @Table(name = "Account")
@@ -10,37 +14,70 @@ public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "account_id")
+    @JsonBackReference
+    @JsonIgnore
     private Integer accountId;
+
+    @Column(name = "IDNumber")
+    private Integer uniqIdNumber;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
+    @JsonIgnore
     private Customer customer;
 
-    @Column(name = "name")
+    @Column(name = "balance")
     private Double balance;
 
     @ManyToOne
     @JoinColumn(name = "currency_id")
+    @JsonBackReference
+    @JsonIgnore
     private Currency currency;
 
     @Column(name = "status")
-    private String status;
+    private AccountStatus status;
 
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "account",fetch = FetchType.EAGER)
+    @JsonBackReference
+    @JsonIgnore
     private List<Transaction> transactions;
 
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "account",fetch = FetchType.EAGER)
+    @JsonBackReference
+    @JsonIgnore
     private List<Loan> loans;
 
-    public Account(Integer accountId, Customer customer, Double balance, Currency currency, String status, List<Transaction> transactions, List<Loan> loans) {
-        this.accountId = accountId;
+    public void addTransaction(Transaction transaction)
+    {
+        this.transactions.add(transaction);
+    }
+
+    public void addLoan(Loan loan)
+    {
+        this.loans.add(loan);
+    }
+
+    public Account() {
+        System.out.println("Account default CTOR");
+    }
+
+    public Account(Integer idNumber, Customer customer, Double balance, Currency currency, AccountStatus status, List<Transaction> transactions, List<Loan> loans) {
+        this.uniqIdNumber = idNumber;
         this.customer = customer;
         this.balance = balance;
         this.currency = currency;
         this.status = status;
         this.transactions = transactions;
         this.loans = loans;
+    }
+
+    public Integer getUniqIdNumber() {
+        return uniqIdNumber;
+    }
+
+    public void setUniqIdNumber(Integer uniqIdNumber) {
+        this.uniqIdNumber = uniqIdNumber;
     }
 
     public void setLoans(List<Loan> loans) {
@@ -51,7 +88,7 @@ public class Account {
         this.transactions = transactions;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(AccountStatus status) {
         this.status = status;
     }
 
@@ -87,7 +124,7 @@ public class Account {
         return currency;
     }
 
-    public String getStatus() {
+    public AccountStatus getStatus() {
         return status;
     }
 

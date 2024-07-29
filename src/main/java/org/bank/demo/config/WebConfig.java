@@ -1,4 +1,4 @@
-package com.jb.currencyexchange.config;
+package org.bank.demo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

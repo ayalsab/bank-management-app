@@ -1,6 +1,6 @@
 package org.bank.demo.shared;
 
-public enum Status {
+public enum AccountStatus {
         RESTRICTION,
         ACTIVE,
         DELAY;

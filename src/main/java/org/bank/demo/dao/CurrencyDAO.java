@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CurrencyDAO extends JpaRepository<Currency,Integer> {
 
+    Currency findCurrencyByCurrencyId(Integer id);
+
 }

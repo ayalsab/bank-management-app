@@ -1,12 +1,13 @@
-package com.jb.currencyexchange.beans;
+package org.bank.demo.beans;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class ConvertResult {
 
 	@JsonProperty("fromCurrency")
@@ -17,5 +18,5 @@ public class ConvertResult {
 	private double amount;
 	@JsonProperty("result")
 	private double result;
-	
+
 }

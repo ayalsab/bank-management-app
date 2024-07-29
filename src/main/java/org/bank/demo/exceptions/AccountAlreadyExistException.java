@@ -1,15 +1,15 @@
 package org.bank.demo.exceptions;
 
-import org.bank.demo.beans.Currency;
+import org.bank.demo.beans.Account;
 import org.bank.demo.beans.Customer;
 
-public class CustomerAlreadyExistException extends Throwable {
-    private Customer existingCustomer;
-    public CustomerAlreadyExistException(Customer existingCustomer) {
-        this.existingCustomer = existingCustomer;
+public class AccountAlreadyExistException extends Throwable {
+    private Account existingAccount;
+    public AccountAlreadyExistException(Account existingAccount) {
+        this.existingAccount = existingAccount;
     }
 
-    public Customer getExistingCustomer() {
-        return existingCustomer;
+    public Account getExistingAccount() {
+        return existingAccount;
     }
 }

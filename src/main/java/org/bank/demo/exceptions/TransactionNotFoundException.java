@@ -1,4 +1,4 @@
 package org.bank.demo.exceptions;
 
-public class LoanNotFoundException extends Exception {
+public class TransactionNotFoundException extends Exception {
 }

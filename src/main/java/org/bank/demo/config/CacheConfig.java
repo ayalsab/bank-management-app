@@ -1,12 +1,14 @@
-package com.jb.currencyexchange.config;
+package org.bank.demo.config;
+
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
 @Configuration
+@EnableCaching
 public class CacheConfig {
 
 	@Bean

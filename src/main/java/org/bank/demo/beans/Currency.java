@@ -1,5 +1,7 @@
 package org.bank.demo.beans;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -11,7 +13,6 @@ public class Currency {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "currency_id")
     private Integer currencyId;
 
     @Column(name = "code")
@@ -20,14 +21,39 @@ public class Currency {
     @Column(name = "exchange_rate")
     private Double exchangeRate;
 
-    @OneToMany(mappedBy = "currency")
+    @OneToMany(mappedBy = "currency" ,fetch = FetchType.EAGER)
+    @JsonBackReference
+    @JsonIgnore
     private List<Account> accounts;
 
-    @OneToMany(mappedBy = "currency")
+    @OneToMany(mappedBy = "currency",fetch = FetchType.EAGER)
+    @JsonBackReference
+    @JsonIgnore
     private List<Transaction> transactions;
 
-    @OneToMany(mappedBy = "currency")
+    @OneToMany(mappedBy = "currency",fetch = FetchType.EAGER)
+    @JsonBackReference
+    @JsonIgnore
     private List<Loan> loans;
+
+    public void addAccount(Account account)
+    {
+        this.accounts.add(account);
+    }
+
+    public void addTransaction(Transaction transaction)
+    {
+        this.transactions.add(transaction);
+    }
+
+    public void addLoan(Loan loan)
+    {
+        this.loans.add(loan);
+    }
+
+    public Currency() {
+        System.out.println("Currency default CTOR");
+    }
 
     public Currency(Integer currencyId, String code, Double exchangeRate, List<Account> accounts, List<Transaction> transactions, List<Loan> loans) {
         this.currencyId = currencyId;

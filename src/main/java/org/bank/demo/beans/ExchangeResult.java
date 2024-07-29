@@ -1,14 +1,13 @@
-package com.jb.currencyexchange.beans;
+package org.bank.demo.beans;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
@@ -36,4 +35,7 @@ public class ExchangeResult {
 	@JsonProperty("rates")
 	private Map<String, Double> rates = new HashMap<>();/*Rates rates;*/
 
+	public Map<String, Double> getRates() {
+		return rates;
+	}
 }

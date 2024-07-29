@@ -1,10 +1,11 @@
-package com.jb.currencyexchange.services;
+package org.bank.demo.BL;
 
+import org.bank.demo.beans.ExchangeResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import com.jb.currencyexchange.beans.ExchangeResult;
 
 @Service
 public class ExchangeRateApiService {
@@ -12,10 +13,12 @@ public class ExchangeRateApiService {
 	@Autowired
 	private RestTemplate restTemplate;
 
-	private static final String URL = "https://api.exchangerate-api.com/v4/latest/";
+	@Value("${exchange.rate.api.url}")
+	private String apiUrl;
 
+	@Cacheable(value = "currencyCache", key = "#from")
 	public ExchangeResult goTo3rdParty(String from) {
-		ExchangeResult res = restTemplate.getForObject(URL + from, ExchangeResult.class);
+		ExchangeResult res = restTemplate.getForObject(apiUrl + from, ExchangeResult.class);
 		return res;
 	}
 
